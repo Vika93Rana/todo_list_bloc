@@ -6,9 +6,14 @@ class TodoCubit extends Cubit<List<ToDO>> {
   /// in the to do app the state is the list of tasks
   TodoCubit() : super([]);
 
-  /// intial state is passed to super class cons
+  /// intial state is passed to super class const
 
   addToDo(String title) {
+    if(title.isEmpty){
+      addError('Title cannot be empty');
+      return;
+    }
+
     final todo = ToDO(name: title, createdAt: DateTime.now());
     // state.add(todo);
     // emit(state); // this will not work becuase emit updates only when it
@@ -22,5 +27,12 @@ class TodoCubit extends Cubit<List<ToDO>> {
     // TODO: implement onChange
     super.onChange(change);
     print(change);
+  }
+
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    // TODO: implement onError
+    super.onError(error, stackTrace);
+    print('todo cubit: $error');
   }
 }
